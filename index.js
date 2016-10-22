@@ -5,7 +5,7 @@ module.exports = function (reducer, initialValue, onEnd) {
   var reduced = initialValue
   var index = 0
 
-  return function pullReductionAsync (source) {
+  return function pullReduction (source) {
     readFromSource()
 
     function readFromSource () {
