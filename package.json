@@ -4,8 +4,11 @@
   "version": "0.0.0",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com/)",
   "devDependencies": {
+    "defence-cli": "^2.0.1",
     "pull-stream": "^3.4.5",
+    "replace-require-self": "^1.1.1",
     "standard": "^8.4.0",
+    "standard-markdown": "^2.2.0",
     "tape": "^4.6.2"
   },
   "files": [
@@ -18,7 +21,9 @@
   "license": "MIT",
   "repository": "kemitchell/pull-reduction.js",
   "scripts": {
-    "lint": "standard",
-    "test": "node test.js"
+    "lint": "standard && standard-markdown",
+    "test": "npm run test:suite && npm run test:readme",
+    "test:suite": "node test.js",
+    "test:readme": "defence README.md | replace-require-self | node"
   }
 }
