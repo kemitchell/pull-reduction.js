@@ -19,7 +19,7 @@ var pull = require('pull-stream')
 pull(
   pull.values([1, 2, 3, 4, 5]),
   reduction(
-    function add (reduced, current, index, callback) {
+    function add (reduced, current, callback) {
       callback(null, reduced + current)
     },
     function (error, reduced) {
@@ -43,10 +43,12 @@ On a [pull-stream] source:
 
 ```javascript
 pull(
-  pull.values([1, 2, 3, 4, 5]),
+  pull.values([0, 0, 0, 0, 0, 0]),
   reduction(
+    // If the reducing function takes four arguments, it receives the
+    // current index, as well.
     function add (reduced, current, index, callback) {
-      callback(null, reduced + current)
+      callback(null, reduced + index)
     },
     100,
     function (error, reduced) {
@@ -63,7 +65,7 @@ Reducers can fail with errors:
 pull(
   pull.values([1, 2, 3, 4, 5]),
   reduction(
-    function fail (reduced, current, index, callback) {
+    function fail (reduced, current, callback) {
       callback(new Error('reduction error'))
     },
     100,

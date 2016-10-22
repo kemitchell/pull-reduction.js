@@ -46,7 +46,7 @@ module.exports = function (/* reducer, [initialValue,] onEnd */) {
                 readFromSource()
               }
             } else {
-              reducer(
+              callReducer(
                 reducedValue, currentValue, index,
                 function (error, newReducedValue) {
                   reducerAlreadyCalledBack = true
@@ -84,6 +84,14 @@ module.exports = function (/* reducer, [initialValue,] onEnd */) {
           keepLooping = false
         }
       } // while (keepLooping)
+    }
+  }
+
+  function callReducer (reduced, current, index, callback) {
+    if (reducer.length === 3) {
+      reducer(reduced, current, callback)
+    } else {
+      reducer(reduced, current, index, callback)
     }
   }
 }
