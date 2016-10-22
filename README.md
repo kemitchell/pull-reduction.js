@@ -2,7 +2,7 @@ On an array:
 
 ```javascript
 var assert = require('assert')
-assert.equal([1, 2, 3, 4].reduce(function (a, b) { return a + b }), 10)
+assert([1, 2, 3, 4].reduce(function (a, b) { return a + b }) === 10)
 ```
 
 On a [pull-stream] source:
@@ -20,8 +20,8 @@ pull(
       callback(null, reduced + current)
     },
     function (error, reduced) {
-      assert.ifError(error, 'no stream error')
-      assert.equal(reduced, 10, 'reduces to sum')
+      assert(error === null, 'no stream error')
+      assert(reduced === 10, 'reduces to sum')
     }
   )
 )
@@ -30,11 +30,10 @@ pull(
 On an array:
 
 ```javascript
-assert.equal(
+assert(
   [0, 0, 0, 0, 0].reduce(function (a, b, index) {
     return a + index
-  }, 100),
-  110
+  }, 100) === 110
 )
 ```
 
@@ -51,8 +50,8 @@ pull(
     },
     100,
     function (error, reduced) {
-      assert.ifError(error, 'no stream error')
-      assert.equal(reduced, 110, 'reduces to sum of indices + initial')
+      assert(error === null, 'no stream error')
+      assert(reduced === 110, 'reduces to sum of indices + initial')
     }
   )
 )
@@ -69,7 +68,7 @@ pull(
     },
     100,
     function (error, reduced) {
-      assert.equal(error.message, 'reduction error', 'aborts with error')
+      assert(error.message === 'reduction error', 'aborts with error')
     }
   )
 )
