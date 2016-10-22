@@ -1,7 +1,20 @@
+On an array:
+
+```javascript
+var assert = require('assert')
+assert.equal(
+  [1, 2, 3, 4, 5].reduce(function (a, b) { return a + b }),
+  15
+)
+```
+
+On a [pull-stream] source:
+
+[pull-stream]: https://www.npmjs.com/package/pull-stream
+
 ```javascript
 var reduction = require('pull-reduction')
 var pull = require('pull-stream')
-var assert = require('assert')
 
 pull(
   pull.values([1, 2, 3, 4, 5]),
@@ -16,7 +29,20 @@ pull(
     }
   )
 )
+```
 
+On an array:
+
+```javascript
+assert.equal(
+  [1, 2, 3, 4, 5].reduce(function (a, b) { return a + b }, 100),
+  115
+)
+```
+
+On a [pull-stream] source:
+
+```javascript
 pull(
   pull.values([1, 2, 3, 4, 5]),
   reduction(
@@ -30,7 +56,11 @@ pull(
     }
   )
 )
+```
 
+Reducers can fail with errors:
+
+```javascript
 pull(
   pull.values([1, 2, 3, 4, 5]),
   reduction(
