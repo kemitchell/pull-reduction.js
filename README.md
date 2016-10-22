@@ -22,7 +22,6 @@ pull(
     function add (reduced, current, index, callback) {
       callback(null, reduced + current)
     },
-    undefined, // Use the first value, just like `[].reduce()`.
     function (error, reduced) {
       assert.ifError(error, 'no stream error')
       assert.equal(reduced, 15, 'reduces to sum')

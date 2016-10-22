@@ -1,7 +1,12 @@
-module.exports = function (reducer, initialValue, onEnd) {
+module.exports = function (/* reducer, [initialValue,] onEnd */) {
+  var reducer = arguments[0]
+  var threeArguments = arguments.length === 3
+  var initialValue = threeArguments ? arguments[1] : undefined
+  var onEnd = threeArguments ? arguments[2] : arguments[1]
+
   // If `initialValue` is `undefined`, we will use the first stream
   // value as the first reduced value.
-  var useFirstValue = true
+  var firstValue = true
   var reducedValue = initialValue
   var index = 0
 
@@ -31,10 +36,9 @@ module.exports = function (reducer, initialValue, onEnd) {
             onEnd(end === true ? null : end, reducedValue)
           // Source stream called back with a value.
           } else {
-            if (useFirstValue && initialValue === undefined) {
+            if (firstValue && initialValue === undefined) {
               // We are using the first stream value as the initial
               // reduced value.
-              useFirstValue = false
               reducedValue = currentValue
 
               if (!keepLooping) {
@@ -72,6 +76,7 @@ module.exports = function (reducer, initialValue, onEnd) {
                 keepLooping = false
               }
             }
+            firstValue = false
           }
         }) // source(null, function (...) { ... })
 
