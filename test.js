@@ -1,14 +1,10 @@
 var pull = require('pull-stream')
-var reduceAsync = require('./').async
-var reduceSync = require('./').sync
+var reduction = require('./')
 var syncValues = require('pull-stream').values
 var tape = require('tape')
 
 var add = {
-  sync: function (a, b, index) {
-    return a + b
-  },
-  callback: function (a, b, index, callback) {
+  sync: function (a, b, index, callback) {
     callback(null, a + b)
   },
   async: function (a, b, index, callback) {
@@ -29,7 +25,7 @@ tape('reducer error aborts', function (test) {
   var reducerCalls = 0
   pull(
     pull.values([1, 2, 3, 4, 5]),
-    reduceAsync(
+    reduction(
       function (reduced, current, index, callback) {
         reducerCalls++
         if (index === 2) {
@@ -48,14 +44,12 @@ tape('reducer error aborts', function (test) {
   )
 })
 
-function test (title, values, reduction, initial, expected) {
+function test (title, values, reducer, initial, expected) {
   [
     {source: true, reducer: 'async'},
     {source: true, reducer: 'sync'},
-    {source: true, reducer: 'callback'},
     {source: false, reducer: 'async'},
-    {source: false, reducer: 'sync'},
-    {source: false, reducer: 'callback'}
+    {source: false, reducer: 'sync'}
   ].forEach(function (permutation) {
     var label = (
       permutation.reducer + ' ' + title +
@@ -64,8 +58,8 @@ function test (title, values, reduction, initial, expected) {
     tape(label, function (test) {
       pull(
         (permutation.source ? asyncValues : syncValues)(values),
-        (permutation.reducer === 'sync' ? reduceSync : reduceAsync)(
-          reduction[permutation.reducer], initial,
+        reduction(
+          reducer[permutation.reducer], initial,
           function (error, reduced) {
             test.ifError(error, 'no stream error')
             test.equal(

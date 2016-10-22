@@ -9,9 +9,7 @@
     "tape": "^4.6.2"
   },
   "files": [
-    "index.js",
-    "sync.js",
-    "async.js"
+    "index.js"
   ],
   "keywords": [
     "pull-stream",
