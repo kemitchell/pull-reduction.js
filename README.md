@@ -6,7 +6,7 @@ var assert = require('assert')
 assert([1, 2, 3, 4].reduce(function (a, b) { return a + b }) === 10)
 ```
 
-On a [pull-stream] source:
+In a [pull-stream] pipeline:
 
 [pull-stream]: https://www.npmjs.com/package/pull-stream
 
@@ -41,7 +41,7 @@ assert(
 )
 ```
 
-On a [pull-stream] source:
+In a [pull-stream] pipeline:
 
 ```javascript
 pull(
