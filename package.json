@@ -1,0 +1,21 @@
+{
+  "name": "pull-reduction",
+  "version": "0.0.0",
+  "description": "",
+  "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com/)",
+  "repository": "kemitchell/pull-reduction.js",
+  "files": [
+    "index.js",
+    "sync.js",
+    "async.js"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "pull-stream": "^3.4.5",
+    "standard": "^8.4.0",
+    "tape": "^4.6.2"
+  },
+  "scripts": {
+    "test": "node test.js"
+  }
+}
