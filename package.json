@@ -18,5 +18,9 @@
   "scripts": {
     "test": "node test.js",
     "lint": "standard"
-  }
+  },
+  "keywords": [
+    "pull-stream",
+    "sink"
+  ]
 }
