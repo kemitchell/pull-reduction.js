@@ -49,6 +49,7 @@ pull(
     function add (reduced, current, index, callback) {
       callback(null, reduced + index)
     },
+    // With three arguments, `reduction` sets an initial value.
     100,
     function (error, reduced) {
       assert(error === null, 'no stream error')
@@ -67,7 +68,6 @@ pull(
     function fail (reduced, current, callback) {
       callback(new Error('reduction error'))
     },
-    100,
     function (error, reduced) {
       assert(error.message === 'reduction error', 'aborts with error')
     }
