@@ -44,6 +44,9 @@ tape('reducer error aborts', function (test) {
   )
 })
 
+// Create test cases to check that a reducer produces an expected values
+// on given input values and initial value, using both synchronous and
+// asynchronous sources and sinks.
 function test (title, values, reducer, initial, expected) {
   [
     {source: true, reducer: 'async'},
@@ -75,6 +78,10 @@ function test (title, values, reducer, initial, expected) {
   })
 }
 
+// Asynchronously stream an array of values.
+//
+// `require('pull-stream').values()` with `setImmediate()` to delay
+// every callback.
 function asyncValues (values) {
   var index = 0
   return function (end, callback) {
