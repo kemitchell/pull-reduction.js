@@ -28,6 +28,9 @@ pull(
 )
 ```
 
+If both the source and the reduction call back synchronously,
+pull-reduction will loop, rather than recurse, to keep the stack short.
+
 On an array:
 
 ```javascript
