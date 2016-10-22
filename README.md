@@ -2,10 +2,7 @@ On an array:
 
 ```javascript
 var assert = require('assert')
-assert.equal(
-  [1, 2, 3, 4, 5].reduce(function (a, b) { return a + b }),
-  15
-)
+assert.equal([1, 2, 3, 4].reduce(function (a, b) { return a + b }), 10)
 ```
 
 On a [pull-stream] source:
@@ -17,14 +14,14 @@ var reduction = require('pull-reduction')
 var pull = require('pull-stream')
 
 pull(
-  pull.values([1, 2, 3, 4, 5]),
+  pull.values([1, 2, 3, 4]),
   reduction(
     function add (reduced, current, callback) {
       callback(null, reduced + current)
     },
     function (error, reduced) {
       assert.ifError(error, 'no stream error')
-      assert.equal(reduced, 15, 'reduces to sum')
+      assert.equal(reduced, 10, 'reduces to sum')
     }
   )
 )
@@ -34,8 +31,10 @@ On an array:
 
 ```javascript
 assert.equal(
-  [1, 2, 3, 4, 5].reduce(function (a, b) { return a + b }, 100),
-  115
+  [0, 0, 0, 0, 0].reduce(function (a, b, index) {
+    return a + index
+  }, 100),
+  110
 )
 ```
 
@@ -43,7 +42,7 @@ On a [pull-stream] source:
 
 ```javascript
 pull(
-  pull.values([0, 0, 0, 0, 0, 0]),
+  pull.values([0, 0, 0, 0, 0]),
   reduction(
     // If the reducing function takes four arguments, it receives the
     // current index, as well.
@@ -53,7 +52,7 @@ pull(
     100,
     function (error, reduced) {
       assert.ifError(error, 'no stream error')
-      assert.equal(reduced, 115, 'reduces to sum + initial')
+      assert.equal(reduced, 110, 'reduces to sum of indices + initial')
     }
   )
 )
