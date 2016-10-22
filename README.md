@@ -59,7 +59,7 @@ pull(
 )
 ```
 
-Reducers can fail with errors:
+Reductions can fail with errors:
 
 ```javascript
 pull(
